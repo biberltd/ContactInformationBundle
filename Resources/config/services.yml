@@ -1,0 +1,4 @@
+services:
+    contactinformation.model:
+            class:        BiberLtd\Core\Bundles\ContactInformationBundle\Services\ContactInformationModel
+            arguments:    [@kernel, "default", "doctrine"]

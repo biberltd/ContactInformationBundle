@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<skipper version="3.0.0.1104" mvc="Symfony2" orm="Doctrine2">
+  <module name="ContactInformationBundle" description="This module holds dynamic contact information entries for each member; therefore it required MemberManagementModule." import-format="Doctrine2Php" import-path="../Entity" uuid="97332506-9332-437e-8cac-2067a914e319">
+    <entity name="PhoneNumber" description="Stores a list of phone numbers, fax numbers, and personal messenger number - basically anyting that solely runs on telephony goes here." uuid="55250718-f8df-4e8c-b557-3b46a65e6a9a">
+      <field name="id" description="System given id." type="integer" size="20" required="true" unique="true" primary="true" auto-increment="true" uuid="3ad215db-4e25-4d08-8a97-1168cc054972"/>
+      <field name="country_code" description="Country code of the phone." type="integer" size="4" required="true" uuid="00edeedf-81d4-4ada-946e-1b6ba5178f48"/>
+      <field name="area_code" description="Area code of the phone numbers." type="integer" size="4" required="true" uuid="bdfd9e79-eea0-461d-afa9-5262f82d8d28"/>
+      <field name="number" description="Phone number." type="integer" size="7" required="true" uuid="dbda969c-8ecf-4fd5-be63-5dbe4af766bc"/>
+      <field name="extension" description="Internal extension if available." type="integer" size="4" uuid="909f313a-d80c-4140-bc74-b6ea59088c39"/>
+      <field name="date_added" description="Date when the entity is first added." type="datetime" required="true" uuid="757f642b-8ae6-4528-aa82-1777f3f19eae"/>
+      <field name="date_updated" description="Date when the entity is last updated." type="datetime" required="true" uuid="de95690c-6949-4ced-b312-c36a31f9db88"/>
+      <field name="date_removed" description="Date when the entity is removed." type="datetime" uuid="00fe87c8-40d0-4d47-b12a-1e6d645cb86a"/>
+      <field name="type" description="h:home, f:fax, m:mobile, p:pager, b:business" type="string" size="1" default="h" required="true" uuid="249a7ceb-2b50-439d-8e34-4ff5bfbf120b"/>
+      <index name="idx_u_phone_number_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_u_phone_number" unique="true">
+        <index-field name="country_code"/>
+        <index-field name="area_code"/>
+        <index-field name="number"/>
+        <index-field name="extension"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">phone_number</attribute>
+        <attribute name="export-file-name">PhoneNumber.php</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="SocialAccount" description="Any social account related personal information is stored hered." uuid="f647863e-4edf-41a2-998c-1facc78fba85">
+      <field name="id" description="System given id." type="integer" size="20" required="true" unique="true" primary="true" auto-increment="true" uuid="3e6b9120-3205-4616-90a2-e0f93f8076dc"/>
+      <field name="username" description="User or account name." type="string" size="255" required="true" uuid="48035f44-da4d-42ff-96d6-6ff6772aa85f"/>
+      <field name="network" description="f:facebook,l:linkedin,t:twitter,i:instagram,g:giggem,r:flickr,5:500px,b:tumbler,p:pinterest" type="string" size="1" default="f" required="true" uuid="0e5da6f8-eddf-4206-9cc5-6ebe05a84739"/>
+      <field name="member" description="Member who owns the account." type="integer" size="10" required="true" uuid="e17ee7ef-f3da-420f-9cd8-fea82e5d7131"/>
+      <field name="date_added" description="Date when the entry added." type="datetime" required="true" uuid="f5d2f3ef-37e9-4331-a928-0d7b63ef6d41"/>
+      <field name="date_updated" description="Date when the entry is updated." type="datetime" required="true" uuid="a315ab19-b11a-4435-b127-7c770dca7a8c"/>
+      <field name="date_removed" description="Date when the entry is removed." type="datetime" uuid="7b4aa946-13fe-47cd-a0e5-8a0630a5086d"/>
+      <index name="idx_u_social_account_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_n_social_accound_date_added">
+        <index-field name="date_added"/>
+      </index>
+      <index name="idx_n_social_accound_date_updated">
+        <index-field name="date_updated"/>
+      </index>
+      <index name="idx_n_social_accound_date_removed">
+        <index-field name="date_removed"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">social_account</attribute>
+        <attribute name="export-file-name">SocialAccount.php</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+      </orm-attributes>
+    </entity>
+    <association from="SocialAccount" to="Member" caption="idx_f_social_account_member" inverse-alias="member" uuid="f388c3fa-4140-479f-b793-336125eb4011">
+      <association-field from="member" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="EmailAddress" description="E-mail related contact information is stored in this table.&#10;" uuid="c014f3de-7238-4c1b-bafa-4202e08f0d4b">
+      <field name="id" description="System given id." type="integer" size="20" required="true" unique="true" primary="true" auto-increment="true" uuid="bd729175-1165-4aa7-9c3f-3f9e21951bc5"/>
+      <field name="email" description="E-mail address." type="string" size="255" required="true" uuid="6b896cea-7368-4423-a48a-5fd5908ce148"/>
+      <field name="date_added" description="Date when the entry is added." type="datetime" required="true" uuid="b7e5a792-be46-4f9d-a895-337fd89351c2"/>
+      <field name="date_updated" description="Date when the entry is last updated." type="datetime" required="true" uuid="0076443d-1e48-49bc-928b-0c39fe560a37"/>
+      <field name="date_removed" description="Date when the entry is removed." type="datetime" uuid="34952575-b230-47a0-baab-8137a750ea6e"/>
+      <index name="idx_u_email_address_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_n_email_address_date_added">
+        <index-field name="date_added"/>
+      </index>
+      <index name="idx_n_email_address_date_updated">
+        <index-field name="date_updated"/>
+      </index>
+      <index name="idx_n_email_address_date_removed">
+        <index-field name="date_removed"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">email_address</attribute>
+        <attribute name="export-file-name">EmailAddress.php</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="ContactInformationType" description="Stores generic grouping thype of contact information such as home, work, emergency, etc." uuid="f639766f-c264-428c-a628-a585d591a35e">
+      <field name="id" description="System given id." type="integer" size="5" required="true" unique="true" primary="true" auto-increment="true" uuid="cf89d10d-fac0-4211-bdba-98d34556ff9b"/>
+      <field name="code" description="Unique code for internal system use." type="string" size="155" required="true" unique="true" uuid="915cc88a-86e9-4eb9-a130-f7a248ef1b33"/>
+      <field name="date_added" description="Date when the entry first added." type="datetime" required="true" uuid="13bf5aac-c8bc-48d3-a267-d749839602e7"/>
+      <field name="date_updated" description="Date when the entry last updated." type="datetime" required="true" uuid="230cd6c6-26bc-487b-97f1-342156870574"/>
+      <field name="date_removed" description="Date when the entry is removed." type="datetime" uuid="276240b0-3ef1-471c-b132-3291cd7444c7"/>
+      <index name="idx_u_contact_information_type_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_u_contact_information_type_code" unique="true">
+        <index-field name="code"/>
+      </index>
+      <index name="idx_n_contact_information_type_date_added">
+        <index-field name="date_added"/>
+      </index>
+      <index name="idx_n_contact_information_type_date_updated">
+        <index-field name="date_updated"/>
+      </index>
+      <index name="idx_n_contact_information_type_date_removed">
+        <index-field name="date_removed"/>
+      </index>
+      <orm-attributes>
+        <attribute name="export-file-name">ContactInformationType.php</attribute>
+        <attribute name="table">contact_information_type</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="ContactInformationTypeLocalization" description="Holds localization values of contact information types." uuid="bdc64d31-537e-4f7e-a67e-8ed53beea4e5">
+      <field name="contact_information_type" description="Localized contact information type." type="integer" size="5" required="true" primary="true" uuid="e3c31aa5-bfbd-45d5-83b2-fe285d2288c1"/>
+      <field name="language" description="Localization language." type="integer" size="5" required="true" primary="true" uuid="ef0cb558-8a0d-4117-8ae5-3d5104fdf3cd"/>
+      <field name="name" description="Name of contact information type." type="string" size="155" required="true" uuid="7d819d46-e645-4747-bf09-63b680efa7e7"/>
+      <field name="url_key" description="Url key of contact information type." type="string" size="255" required="true" uuid="204ab3d9-b3dd-4826-9e46-0f07e2a1fb16"/>
+      <index name="idx_u_contact_information_type" unique="true">
+        <index-field name="contact_information_type"/>
+        <index-field name="language"/>
+      </index>
+      <index name="idx_u_contact_information_type_url_key" unique="true">
+        <index-field name="contact_information_type"/>
+        <index-field name="language"/>
+        <index-field name="url_key"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">contact_information_type_localization</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="export-file-name">ContactInformationTypeLocalization.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="ContactInformationTypeLocalization" to="ContactInformationType" caption="idx_f_contact_information_type_type" inverse-alias="contact_information_type" uuid="f1775d07-f9b2-4951-a294-d19053c62b80">
+      <association-field from="contact_information_type" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="ContactInformationTypeLocalization" to="Language" caption="idx_f_contact_information_type_language" inverse-alias="language" uuid="cfc9ec0a-f432-4fc5-9f64-be80d87358f5">
+      <association-field from="language" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="PhoneNumbersOfMember" description="Associates phone numbers with members." uuid="ac65fd8c-6903-4454-b47e-a0eb73f34532">
+      <field name="member" description="Associated member." type="integer" size="10" required="true" primary="true" uuid="af61d435-8708-44ab-a01f-ebba97962897"/>
+      <field name="phone_number" description="Associated phone number." type="integer" size="20" required="true" primary="true" uuid="63cb31a2-2ea9-4443-9124-e1ac15840214"/>
+      <field name="date_added" description="Date when the entry added." type="datetime" required="true" uuid="718b0c2d-8c91-4dd8-83d3-0954c0c6e055"/>
+      <field name="date_updated" description="Date when the entry last updated." type="datetime" required="true" uuid="a4ebbced-d716-4ce0-9d18-2a8e853ec39b"/>
+      <field name="date_removed" description="Date when the entry is removed from queries." type="datetime" uuid="3d5d1e8d-715d-4fbb-b0fc-97864f0e8f6c"/>
+      <index name="idx_u_phone_numbers_of_member" unique="true">
+        <index-field name="member"/>
+      </index>
+      <index name="idx_n_phone_numbers_of_member_date_added">
+        <index-field name="date_added"/>
+      </index>
+      <index name="idx_n_phone_numbers_of_member_date_updated">
+        <index-field name="date_updated"/>
+      </index>
+      <index name="idx_n_phone_numbers_of_member_date_removed">
+        <index-field name="date_removed"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">phone_numbers_of_member</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="export-file-name">PhoneNumbersOfMember.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="PhoneNumbersOfMember" to="Member" caption="idx_f_phone_numbers_of_member_member" inverse-alias="member" uuid="e355f6a8-0a7b-48dd-9f28-08cbf742eb87">
+      <association-field from="member" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="PhoneNumbersOfMember" to="PhoneNumber" caption="idx_f_phone_numbers_of_member_phone_number" inverse-alias="phone_number" uuid="5943112e-f1e8-4d7e-800d-80562c1ecb57">
+      <association-field from="phone_number" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="EmailAddressesOfMember" description="Associates email address with members." uuid="9bfe56a3-51a8-4ef1-849f-591294020241">
+      <field name="member" description="Associated member." type="integer" size="10" required="true" primary="true" uuid="56c89b97-106f-4330-af70-6f50e8d5d602"/>
+      <field name="email_address" description="Member e-mail address." type="integer" size="20" required="true" primary="true" uuid="8f6c7438-dccd-4b54-b358-4dfaa5a28f75"/>
+      <field name="date_added" description="Date when the entry is added." type="datetime" required="true" uuid="c3b17dff-ffca-4084-9e45-9998892f0113"/>
+      <field name="date_updated" description="Date when the entry is updated." type="datetime" required="true" uuid="771829b6-84c0-49e7-acd0-f4cc1f2bef37"/>
+      <field name="date_removed" description="Date when the entry is removed." type="datetime" uuid="0715e892-4535-4121-9284-c8266207c5c5"/>
+      <field name="type" description="Contact information type if exist." type="integer" size="5" required="true" uuid="fb8932ef-5a1f-481c-ac6b-406148fef6f3"/>
+      <index name="idx_u_email_addresses_of_member" unique="true">
+        <index-field name="member"/>
+        <index-field name="email_address"/>
+      </index>
+      <index name="idx_n_email_addresses_of_member_date_added">
+        <index-field name="date_added"/>
+      </index>
+      <index name="idx_n_email_addresses_of_member_date_updated">
+        <index-field name="date_updated"/>
+      </index>
+      <index name="idx_n_email_addresses_of_member_date_removed">
+        <index-field name="date_removed"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">email_address_of_members</attribute>
+        <attribute name="export-file-name">EmailAddressOfMembers.php</attribute>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+      </orm-attributes>
+    </entity>
+    <association from="EmailAddressesOfMember" to="EmailAddress" caption="idx_f_email_addresses_of_member_email_address" inverse-alias="email_address" uuid="ef6244f7-cb2a-479e-b094-83ebd0925b84">
+      <association-field from="email_address" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="EmailAddressesOfMember" to="Member" caption="idx_f_email_addresses_of_member_member" inverse-alias="member" uuid="491c73dc-321d-41b1-be75-c0b91f1bc2b5">
+      <association-field from="member" to="id"/>
+    </association>
+    <association from="EmailAddressesOfMember" to="ContactInformationType" caption="idx_f_contact_email_address_type" inverse-alias="type" uuid="aa824588-8eb7-4fd0-8e66-177e3d230690">
+      <association-field from="type" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <orm-attributes>
+      <attribute name="namespace">BiberLtd\Core\Bundles\ContactInformationBundle\Entity</attribute>
+      <attribute name="filename-format">entity-name-only</attribute>
+      <attribute name="file-suffix">without-suffix</attribute>
+    </orm-attributes>
+  </module>
+  <visual-data>
+    <entity uuid="55250718-f8df-4e8c-b557-3b46a65e6a9a" bg-color="4294967295" hdr-color="4292006610" position-x="53" position-y="18" size-x="0" size-x2="73" size-y="0" size-y2="20"/>
+    <module uuid="97332506-9332-437e-8cac-2067a914e319" bg-color="4292080297" size-x="0" size-x2="853" size-y="32" size-y2="618"/>
+    <entity uuid="9bfe56a3-51a8-4ef1-849f-591294020241" bg-color="4294967295" hdr-color="4292006610" position-x="650" position-y="68" size-x="0" size-x2="138" size-y="0" size-y2="101"/>
+    <entity uuid="ac65fd8c-6903-4454-b47e-a0eb73f34532" bg-color="4294967295" hdr-color="4292006610" position-x="203" position-y="217" size-x="0" size-x2="139" size-y="0" size-y2="101"/>
+    <entity uuid="bdc64d31-537e-4f7e-a67e-8ed53beea4e5" bg-color="4294967295" hdr-color="4292006610" position-x="53" position-y="518" size-x="0" size-x2="180" size-y="0" size-y2="73"/>
+    <entity uuid="c014f3de-7238-4c1b-bafa-4202e08f0d4b" bg-color="4294967295" hdr-color="4292006610" position-x="603" position-y="418" size-x="0" size-x2="130" size-y="0" size-y2="87"/>
+    <entity uuid="f639766f-c264-428c-a628-a585d591a35e" bg-color="4294967295" hdr-color="4292006610" position-x="53" position-y="368" size-x="0" size-x2="130" size-y="0" size-y2="87"/>
+    <entity uuid="f647863e-4edf-41a2-998c-1facc78fba85" bg-color="4294967295" hdr-color="4292006610" position-x="353" position-y="68" size-x="0" size-x2="72" size-y="0" size-y2="20"/>
+  </visual-data>
+</skipper>
