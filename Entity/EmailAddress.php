@@ -1,5 +1,5 @@
 <?php
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Entity;
+namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Core\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 

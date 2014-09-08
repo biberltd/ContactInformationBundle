@@ -1,9 +1,9 @@
 <?php
 
-namespace BiberLtd\Core\Bundles\ContactInformationBundle;
+namespace BiberLtd\Bundle\ContactInformationBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class BiberLtdCoreBundlesContactInformationBundle extends Bundle
+class BiberLtdBundleContactInformationBundle extends Bundle
 {
 }

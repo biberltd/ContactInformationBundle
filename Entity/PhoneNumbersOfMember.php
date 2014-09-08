@@ -1,5 +1,5 @@
 <?php
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Entity;
+namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Core\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -35,14 +35,14 @@ class PhoneNumbersOfMember extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MemberManagementBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
      * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $member;
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\ContactInformationBundle\Entity\PhoneNumber")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber")
      * @ORM\JoinColumn(name="phone_number", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * 
      */

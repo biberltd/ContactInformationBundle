@@ -1,5 +1,5 @@
 <?php
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Entity;
+namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Core\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -31,14 +31,14 @@ class ContactInformationTypeLocalization extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\ContactInformationBundle\Entity\ContactInformationType")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType")
      * @ORM\JoinColumn(name="contact_information_type", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $contact_information_type;
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MultiLanguageSupportBundle\Entity\Language")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language")
      * @ORM\JoinColumn(name="language", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $language;

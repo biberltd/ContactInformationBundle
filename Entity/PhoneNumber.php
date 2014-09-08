@@ -1,5 +1,5 @@
 <?php
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Entity;
+namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Core\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -65,7 +65,7 @@ class PhoneNumber extends CoreEntity
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Core\Bundles\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
+     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
      *     mappedBy="phone"
      * )
      */

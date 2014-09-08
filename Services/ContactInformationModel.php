@@ -44,15 +44,15 @@
  * @todo v1.1.0     listPhoneNumbersWithAreaAndCountryCode()
  */
 
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Services;
+namespace BiberLtd\Bundle\ContactInformationBundle\Services;
 
 /** Entities to be used */
-use BiberLtd\Core\Bundles\ContactInformationBundle\Entity as BundleEntity;
-use BiberLtd\Core\Bundles\LogBundle\Entity as LBEntity;
-use BiberLtd\Core\Bundles\MemberManagementBundle\Entity as MMBEntity;
+use BiberLtd\Bundle\ContactInformationBundle\Entity as BundleEntity;
+use BiberLtd\Bundle\LogBundle\Entity as LBEntity;
+use BiberLtd\Bundle\MemberManagementBundle\Entity as MMBEntity;
 /** Models to be loaded */
-use BiberLtd\Core\Bundles\LogBundle\Services as LBService;
-use BiberLtd\Core\Bundles\MemberManagementBundle\Services as MMBService;
+use BiberLtd\Bundle\LogBundle\Services as LBService;
+use BiberLtd\Bundle\MemberManagementBundle\Services as MMBService;
 /** Core Service */
 use BiberLtd\Core\CoreModel;
 use BiberLtd\Core\Services as CoreServices;
@@ -893,7 +893,7 @@ class ContactInformationModel extends CoreModel {
         } elseif ($by == 'post') {
 
             foreach ($collection as $item) {
-                $entity = new \BiberLtd\Core\Bundles\ContactInformationBundle\Entity\EmailAddress();
+                $entity = new \BiberLtd\Bundle\ContactInformationBundle\Entity\EmailAddress();
                 foreach ($item['address'] as $column => $value) {
                     $itemMethod = 'set_' . $column;
                     if (method_exists($entity, $itemMethod)) {
@@ -1297,7 +1297,7 @@ class ContactInformationModel extends CoreModel {
         } elseif ($by == 'post') {
 
             foreach ($collection as $item) {
-                $entity = new \BiberLtd\Core\Bundles\ContactInformationBundle\Entity\ContactInformationType();
+                $entity = new \BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType();
                 foreach ($item['address'] as $column => $value) {
                     $itemMethod = 'set_' . $column;
                     if (method_exists($entity, $itemMethod)) {
