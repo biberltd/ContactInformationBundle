@@ -1,0 +1,3 @@
+biber_ltd_contact_information_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BiberLtdContactInformationBundle:Default:index }
