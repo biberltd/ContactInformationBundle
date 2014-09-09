@@ -1,6 +1,6 @@
 <?php
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Entity;
-use BiberLtd\Core\CoreLocalizableEntity;
+namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
+use BiberLtd\Bundle\CoreBundle\CoreLocalizableEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 

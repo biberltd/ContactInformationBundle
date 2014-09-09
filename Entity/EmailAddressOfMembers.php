@@ -1,6 +1,6 @@
 <?php
-namespace BiberLtd\Core\Bundles\ContactInformationBundle\Entity;
-use BiberLtd\Core\CoreEntity;
+namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
+use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -35,20 +35,20 @@ class EmailAddressesOfMember extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\ContactInformationBundle\Entity\EmailAddress")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\EmailAddress")
      * @ORM\JoinColumn(name="email_address", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $email_address;
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MemberManagementBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
      * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false)
      */
     private $member;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\ContactInformationBundle\Entity\ContactInformationType")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType")
      * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $type;
