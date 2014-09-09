@@ -1,7 +1,4 @@
-parameters:
-#    biber_ltd_contact_information.example.class: BiberLtd\Bundle\ContactInformationBundle\Example
-
 services:
-#    biber_ltd_contact_information.example:
-#        class: %biber_ltd_contact_information.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    contactinformation.model:
+            class:        BiberLtd\Bundle\ContactInformationBundle\Services\ContactInformationModel
+            arguments:    [@kernel, "default", "doctrine"]
