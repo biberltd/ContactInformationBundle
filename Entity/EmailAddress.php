@@ -1,4 +1,12 @@
 <?php
+/**
+ * @author		Can Berkol
+ *
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
+ *
+ * @date        22.12.2015
+ */
 namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
@@ -9,11 +17,14 @@ use Doctrine\ORM\Mapping AS ORM;
  *     name="email_address",
  *     options={"charset":"utf8","collate":"utf8_turkish_ci","engine":"innodb"},
  *     indexes={
- *         @ORM\Index(name="idx_n_email_address_date_added", columns={"date_added"}),
- *         @ORM\Index(name="idx_n_email_address_date_updated", columns={"date_updated"}),
- *         @ORM\Index(name="idx_n_email_address_date_removed", columns={"date_removed"})
+ *         @ORM\Index(name="idxNEmailAddressDateAdded", columns={"date_added"}),
+ *         @ORM\Index(name="idxNEmailAddressDateUpdated", columns={"date_updated"}),
+ *         @ORM\Index(name="idxNEmailAddressDateRemoved", columns={"date_removed"})
  *     },
- *     uniqueConstraints={@ORM\UniqueConstraint(name="idx_u_email_address_id", columns={"id"})}
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="idxUEmailAddressId", columns={"id"}),
+ *         @ORM\UniqueConstraint(name="idxUEmailAddress", columns={"email"})
+ *     }
  * )
  */
 class EmailAddress extends CoreEntity
@@ -22,46 +33,40 @@ class EmailAddress extends CoreEntity
      * @ORM\Id
      * @ORM\Column(type="integer", length=20)
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /** 
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string
      */
     private $email;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_added;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_updated;
 
     /** 
      * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     public $date_removed;
 
     /**
-     * @name                  setEmail ()
-     *                                 Sets the email property.
-     *                                 Updates the data only if stored value and value to be set are different.
+     * @param string $email
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $email
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setEmail($email) {
+    public function setEmail(\string $email) {
         if(!$this->setModified('email', $email)->isModified()) {
             return $this;
         }
@@ -70,34 +75,16 @@ class EmailAddress extends CoreEntity
     }
 
     /**
-     * @name            getEmail ()
-     *                           Returns the value of email property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->email
+     * @return string
      */
     public function getEmail() {
         return $this->email;
     }
 
     /**
-     * @name            getId()
-     *                      Returns the value of id property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->id
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
-
-
 }

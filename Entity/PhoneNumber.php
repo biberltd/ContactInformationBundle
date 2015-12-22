@@ -1,4 +1,12 @@
 <?php
+/**
+ * @author		Can Berkol
+ *
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
+ *
+ * @date        22.12.2015
+ */
 namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
@@ -9,8 +17,8 @@ use Doctrine\ORM\Mapping AS ORM;
  *     name="phone_number",
  *     options={"charset":"utf8","collate":"utf8_turkish_ci","engine":"innodb"},
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="idx_u_phone_number_id", columns={"id"}),
- *         @ORM\UniqueConstraint(name="idx_u_phone_number", columns={"country_code","area_code","number","extension"})
+ *         @ORM\UniqueConstraint(name="idxUPhoneNumberId", columns={"id"}),
+ *         @ORM\UniqueConstraint(name="idxUPhoneNumber", columns={"country_code","area_code","number"})
  *     }
  * )
  */
@@ -20,73 +28,64 @@ class PhoneNumber extends CoreEntity
      * @ORM\Id
      * @ORM\Column(type="integer", length=20)
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /** 
-     * @ORM\Column(type="integer", length=4, nullable=false)
+     * @ORM\Column(type="string", length=5, nullable=false)
+     * @var string
      */
     private $country_code;
 
     /** 
-     * @ORM\Column(type="integer", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=false)
+     * @var string
      */
     private $area_code;
 
     /** 
-     * @ORM\Column(type="integer", length=7, nullable=false)
+     * @ORM\Column(type="string", length=7, nullable=false)
+     * @var string
      */
     private $number;
 
     /** 
-     * @ORM\Column(type="integer", length=4, nullable=true)
+     * @ORM\Column(type="string", length=4, nullable=true)
+     * @var string
      */
     private $extension;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_added;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_updated;
 
     /** 
      * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     public $date_removed;
 
     /**
-     * @ORM\Column(type="string", length=1, nullable=false)
+     * @ORM\Column(type="string", length=1, nullable=false, options={"default":"h"})
+     * @var string
      */
     private $type;
 
     /**
-     * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Bundle\AddressManagementBundle\Entity\PhoneNumbersOfAddresses",
-     *     mappedBy="phone"
-     * )
+     * @param string $type
+     *
+     * @return $this
      */
-    private $phoneNumbersOfAddresses;
-    /**
-     * @name            setType ()
-     *                  Sets the type property.
-     *                  Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Said İmamoğlu
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $type
-     *
-     * @return          object                $this
-     */
-    public function setType($type)
+    public function setType(\string $type)
     {
         if ($this->setModified('type', $type)->isModified()) {
             $this->type = $type;
@@ -94,39 +93,20 @@ class PhoneNumber extends CoreEntity
         return $this;
     }
 
-    /**
-     * @name            getType ()
-     *                  Returns the value of type property.
-     *
-     * @author          Said İmamoğlu
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->type
-     */
+	/**
+	 * @return string
+	 */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * @name                  setAreaCode ()
-     *                                    Sets the area_code property.
-     *                                    Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $area_code
-     *
-     * @return          object                $this
-     */
-    public function setAreaCode($area_code) {
+	/**
+	 * @param string $area_code
+	 *
+	 * @return $this
+	 */
+    public function setAreaCode(\string $area_code) {
         if(!$this->setModified('area_code', $area_code)->isModified()) {
             return $this;
         }
@@ -134,38 +114,19 @@ class PhoneNumber extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getAreaCode ()
-     *                              Returns the value of area_code property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->area_code
-     */
+	/**
+	 * @return string
+	 */
     public function getAreaCode() {
         return $this->area_code;
     }
 
-    /**
-     * @name                  setCountryCode ()
-     *                                       Sets the country_code property.
-     *                                       Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $country_code
-     *
-     * @return          object                $this
-     */
-    public function setCountryCode($country_code) {
+	/**
+	 * @param string $country_code
+	 *
+	 * @return $this
+	 */
+    public function setCountryCode(\string $country_code) {
         if(!$this->setModified('country_code', $country_code)->isModified()) {
             return $this;
         }
@@ -173,38 +134,19 @@ class PhoneNumber extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getCountryCode ()
-     *                                 Returns the value of country_code property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->country_code
-     */
+	/**
+	 * @return string
+	 */
     public function getCountryCode() {
         return $this->country_code;
     }
 
-    /**
-     * @name                  setExtension ()
-     *                                     Sets the extension property.
-     *                                     Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $extension
-     *
-     * @return          object                $this
-     */
-    public function setExtension($extension) {
+	/**
+	 * @param string $extension
+	 *
+	 * @return $this
+	 */
+    public function setExtension(\string $extension) {
         if(!$this->setModified('extension', $extension)->isModified()) {
             return $this;
         }
@@ -212,53 +154,26 @@ class PhoneNumber extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getExtension ()
-     *                               Returns the value of extension property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->extension
-     */
+	/**
+	 * @return string
+	 */
     public function getExtension() {
         return $this->extension;
     }
 
-    /**
-     * @name            getId()
-     *                      Returns the value of id property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->id
-     */
+	/**
+	 * @return int
+	 */
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * @name                  setNumber ()
-     *                                  Sets the number property.
-     *                                  Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $number
-     *
-     * @return          object                $this
-     */
-    public function setNumber($number) {
+	/**
+	 * @param string $number
+	 *
+	 * @return $this
+	 */
+    public function setNumber(\string $number) {
         if(!$this->setModified('number', $number)->isModified()) {
             return $this;
         }
@@ -266,19 +181,10 @@ class PhoneNumber extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getNumber ()
-     *                            Returns the value of number property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->number
-     */
+	/**
+	 * @return string
+	 */
     public function getNumber() {
         return $this->number;
     }
-
 }

@@ -1,6 +1,15 @@
 <?php
+/**
+ * @author		Can Berkol
+ *
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
+ *
+ * @date        22.12.2015
+ */
 namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
+use BiberLtd\Bundle\MemberManagementBundle\Entity\Member;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -9,34 +18,38 @@ use Doctrine\ORM\Mapping AS ORM;
  *     name="phone_numbers_of_member",
  *     options={"charset":"utf8","collate":"utf8_turkish_ci","engine":"innodb"},
  *     indexes={
- *         @ORM\Index(name="idx_n_phone_numbers_of_member_date_added", columns={"date_added"}),
- *         @ORM\Index(name="idx_n_phone_numbers_of_member_date_updated", columns={"date_updated"}),
- *         @ORM\Index(name="idx_n_phone_numbers_of_member_date_removed", columns={"date_removed"})
+ *         @ORM\Index(name="idxNPhoneNumberOfMemberDateAdded", columns={"date_added"}),
+ *         @ORM\Index(name="idxNPhoneNumberOfMemberDateUpdated", columns={"date_updated"}),
+ *         @ORM\Index(name="idxNPhoneNumberOfMemberDateRemoved", columns={"date_removed"})
  *     },
- *     uniqueConstraints={@ORM\UniqueConstraint(name="idx_u_phone_numbers_of_member", columns={"member"})}
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="ixUPhoneNumberOfMember", columns={"phone_number","member"})}
  * )
  */
 class PhoneNumbersOfMember extends CoreEntity
 {
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_added;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_updated;
 
     /** 
      * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     public $date_removed;
 
     /** 
-     * @ORM\Id
+     * 
      * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
      * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @var \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
      */
     private $member;
 
@@ -44,27 +57,16 @@ class PhoneNumbersOfMember extends CoreEntity
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber")
      * @ORM\JoinColumn(name="phone_number", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     * 
+     * @var \BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber
      */
     private $phone_number;
 
     /**
-     * @name                  setMember ()
-     *                                  Sets the member property.
-     *                                  Updates the data only if stored value and value to be set are different.
+     * @param \BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $member
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setMember($member) {
+    public function setMember(\BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member) {
         if(!$this->setModified('member', $member)->isModified()) {
             return $this;
         }
@@ -72,38 +74,19 @@ class PhoneNumbersOfMember extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getMember ()
-     *                            Returns the value of member property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->member
-     */
+	/**
+	 * @return \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
+	 */
     public function getMember() {
         return $this->member;
     }
 
-    /**
-     * @name                  setPhoneNumber ()
-     *                                       Sets the phone_number property.
-     *                                       Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $phone_number
-     *
-     * @return          object                $this
-     */
-    public function setPhoneNumber($phone_number) {
+	/**
+	 * @param \BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber $phone_number
+	 *
+	 * @return $this
+	 */
+    public function setPhoneNumber(\BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber $phone_number) {
         if(!$this->setModified('phone_number', $phone_number)->isModified()) {
             return $this;
         }
@@ -111,19 +94,10 @@ class PhoneNumbersOfMember extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getPhoneNumber ()
-     *                                 Returns the value of phone_number property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->phone_number
-     */
+	/**
+	 * @return \BiberLtd\Bundle\ContactInformationBundle\Entity\PhoneNumber
+	 */
     public function getPhoneNumber() {
         return $this->phone_number;
     }
-
 }

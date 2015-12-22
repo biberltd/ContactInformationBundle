@@ -1,4 +1,12 @@
 <?php
+/**
+ * @author		Can Berkol
+ *
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
+ *
+ * @date        22.12.2015
+ */
 namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
@@ -9,11 +17,11 @@ use Doctrine\ORM\Mapping AS ORM;
  *     name="social_account",
  *     options={"charset":"utf8","collate":"utf8_turkish_ci","engine":"innodb"},
  *     indexes={
- *         @ORM\Index(name="idx_n_social_accound_date_added", columns={"date_added"}),
- *         @ORM\Index(name="idx_n_social_accound_date_updated", columns={"date_updated"}),
- *         @ORM\Index(name="idx_n_social_accound_date_removed", columns={"date_removed"})
+ *         @ORM\Index(name="idxNSocialAccountDateAdded", columns={"date_added"}),
+ *         @ORM\Index(name="idxNSocialAccountDateUpdated", columns={"date_updated"}),
+ *         @ORM\Index(name="idxNSocialAccountDateRemoved", columns={"date_removed"})
  *     },
- *     uniqueConstraints={@ORM\UniqueConstraint(name="idx_u_social_account_id", columns={"id"})}
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="idxUSocialAccountId", columns={"id"})}
  * )
  */
 class SocialAccount extends CoreEntity
@@ -22,72 +30,60 @@ class SocialAccount extends CoreEntity
      * @ORM\Id
      * @ORM\Column(type="integer", length=20)
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /** 
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string
      */
     private $username;
 
     /** 
-     * @ORM\Column(type="string", length=1, nullable=false)
+     * @ORM\Column(type="string", length=1, nullable=false, options={"default":"f"})
+     * @var string
      */
     private $network;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_added;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     public $date_updated;
 
     /** 
      * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     public $date_removed;
 
     /** 
      * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
-     * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false)
+     * @var \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
      */
     private $member;
 
     /**
-     * @name            getId()
-     *                      Returns the value of id property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->id
+     * @return mixed
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * @name                  setMember ()
-     *                                  Sets the member property.
-     *                                  Updates the data only if stored value and value to be set are different.
+     * @param \BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $member
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setMember($member) {
+    public function setMember(\BiberLtd\Bundle\MemberManagementBundle\Entity\Member $member) {
         if(!$this->setModified('member', $member)->isModified()) {
             return $this;
         }
@@ -96,37 +92,18 @@ class SocialAccount extends CoreEntity
     }
 
     /**
-     * @name            getMember ()
-     *                            Returns the value of member property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->member
+     * @return \BiberLtd\Bundle\MemberManagementBundle\Entity\Member
      */
     public function getMember() {
         return $this->member;
     }
 
     /**
-     * @name                  setNetwork ()
-     *                                   Sets the network property.
-     *                                   Updates the data only if stored value and value to be set are different.
+     * @param string $network
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $network
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setNetwork($network) {
+    public function setNetwork(\string $network) {
         if(!$this->setModified('network', $network)->isModified()) {
             return $this;
         }
@@ -135,37 +112,18 @@ class SocialAccount extends CoreEntity
     }
 
     /**
-     * @name            getNetwork ()
-     *                             Returns the value of network property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->network
+     * @return string
      */
     public function getNetwork() {
         return $this->network;
     }
 
     /**
-     * @name                  setUsername ()
-     *                                    Sets the username property.
-     *                                    Updates the data only if stored value and value to be set are different.
+     * @param string $username
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $username
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setUsername($username) {
+    public function setUsername(\string $username) {
         if(!$this->setModified('username', $username)->isModified()) {
             return $this;
         }
@@ -174,18 +132,9 @@ class SocialAccount extends CoreEntity
     }
 
     /**
-     * @name            getUsername ()
-     *                              Returns the value of username property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->username
+     * @return string
      */
     public function getUsername() {
         return $this->username;
     }
-
 }

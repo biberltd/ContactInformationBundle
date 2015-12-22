@@ -1,4 +1,12 @@
 <?php
+/**
+ * @author		Can Berkol
+ *
+ * @copyright   Biber Ltd. (http://www.biberltd.com) (C) 2015
+ * @license     GPLv3
+ *
+ * @date        22.12.2015
+ */
 namespace BiberLtd\Bundle\ContactInformationBundle\Entity;
 use BiberLtd\Bundle\CoreBundle\CoreEntity;
 use Doctrine\ORM\Mapping AS ORM;
@@ -9,10 +17,13 @@ use Doctrine\ORM\Mapping AS ORM;
  *     name="contact_information_type_localization",
  *     options={"charset":"utf8","collate":"utf8_turkish_ci","engine":"innodb"},
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="idx_u_contact_information_type", columns={"contact_information_type","language"}),
  *         @ORM\UniqueConstraint(
- *             name="idx_u_contact_information_type_url_key",
- *             columns={"contact_information_type","language","url_key"}
+ *             name="idxULocalizedContactInformationType",
+ *             columns={"contact_information_type","language"}
+ *         ),
+ *         @ORM\UniqueConstraint(
+ *             name="idxULocalizaedContactInformationTypeUrylKey",
+ *             columns={"contact_information_type","url_key","language"}
  *         )
  *     }
  * )
@@ -21,11 +32,13 @@ class ContactInformationTypeLocalization extends CoreEntity
 {
     /** 
      * @ORM\Column(type="string", length=155, nullable=false)
+     * @var string
      */
     private $name;
 
     /** 
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string
      */
     private $url_key;
 
@@ -33,33 +46,27 @@ class ContactInformationTypeLocalization extends CoreEntity
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType")
      * @ORM\JoinColumn(name="contact_information_type", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @var \BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType
      */
     private $contact_information_type;
 
     /** 
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language")
+     * 
+     * @ORM\ManyToOne(
+     *     targetEntity="BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language",
+     *     inversedBy="contactInformationTypeLocalization"
+     * )
      * @ORM\JoinColumn(name="language", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @var \BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language
      */
     private $language;
 
     /**
-     * @name                  setContact İnformationType()
-     *                                   Sets the contact_information_type property.
-     *                                   Updates the data only if stored value and value to be set are different.
+     * @param \BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType $contact_information_type
      *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $contact_information_type
-     *
-     * @return          object                $this
+     * @return $this
      */
-    public function setContactInformationType($contact_information_type) {
+    public function setContactInformationType(\BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType $contact_information_type) {
         if(!$this->setModified('contact_information_type', $contact_information_type)->isModified()) {
             return $this;
         }
@@ -68,37 +75,18 @@ class ContactInformationTypeLocalization extends CoreEntity
     }
 
     /**
-     * @name            getContact İnformationType()
-     *                             Returns the value of contact_information_type property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->contact_information_type
+     * @return \BiberLtd\Bundle\ContactInformationBundle\Entity\ContactInformationType
      */
     public function getContactInformationType() {
         return $this->contact_information_type;
     }
 
-    /**
-     * @name                  setLanguage ()
-     *                                    Sets the language property.
-     *                                    Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $language
-     *
-     * @return          object                $this
-     */
-    public function setLanguage($language) {
+	/**
+	 * @param \BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language $language
+	 *
+	 * @return $this
+	 */
+    public function setLanguage(\BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language $language) {
         if(!$this->setModified('language', $language)->isModified()) {
             return $this;
         }
@@ -106,38 +94,19 @@ class ContactInformationTypeLocalization extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getLanguage ()
-     *                              Returns the value of language property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->language
-     */
+	/**
+	 * @return \BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language
+	 */
     public function getLanguage() {
         return $this->language;
     }
 
-    /**
-     * @name                  setName ()
-     *                                Sets the name property.
-     *                                Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $name
-     *
-     * @return          object                $this
-     */
-    public function setName($name) {
+	/**
+	 * @param string $name
+	 *
+	 * @return $this
+	 */
+    public function setName(\string $name) {
         if(!$this->setModified('name', $name)->isModified()) {
             return $this;
         }
@@ -145,38 +114,19 @@ class ContactInformationTypeLocalization extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getName ()
-     *                          Returns the value of name property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->name
-     */
+	/**
+	 * @return string
+	 */
     public function getName() {
         return $this->name;
     }
 
-    /**
-     * @name                  setUrlKey ()
-     *                                  Sets the url_key property.
-     *                                  Updates the data only if stored value and value to be set are different.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @use             $this->setModified()
-     *
-     * @param           mixed $url_key
-     *
-     * @return          object                $this
-     */
-    public function setUrlKey($url_key) {
+	/**
+	 * @param string $url_key
+	 *
+	 * @return $this
+	 */
+    public function setUrlKey(\string $url_key) {
         if(!$this->setModified('url_key', $url_key)->isModified()) {
             return $this;
         }
@@ -184,20 +134,10 @@ class ContactInformationTypeLocalization extends CoreEntity
 		return $this;
     }
 
-    /**
-     * @name            getUrlKey ()
-     *                            Returns the value of url_key property.
-     *
-     * @author          Can Berkol
-     *
-     * @since           1.0.0
-     * @version         1.0.0
-     *
-     * @return          mixed           $this->url_key
-     */
+	/**
+	 * @return string
+	 */
     public function getUrlKey() {
         return $this->url_key;
     }
-
-
 }
