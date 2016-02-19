@@ -66,7 +66,7 @@ class EmailAddress extends CoreEntity
      *
      * @return $this
      */
-    public function setEmail(\string $email) {
+    public function setEmail(string $email) {
         if(!$this->setModified('email', $email)->isModified()) {
             return $this;
         }

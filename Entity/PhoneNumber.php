@@ -85,7 +85,7 @@ class PhoneNumber extends CoreEntity
      *
      * @return $this
      */
-    public function setType(\string $type)
+    public function setType(string $type)
     {
         if ($this->setModified('type', $type)->isModified()) {
             $this->type = $type;
@@ -106,7 +106,7 @@ class PhoneNumber extends CoreEntity
 	 *
 	 * @return $this
 	 */
-    public function setAreaCode(\string $area_code) {
+    public function setAreaCode(string $area_code) {
         if(!$this->setModified('area_code', $area_code)->isModified()) {
             return $this;
         }
@@ -126,7 +126,7 @@ class PhoneNumber extends CoreEntity
 	 *
 	 * @return $this
 	 */
-    public function setCountryCode(\string $country_code) {
+    public function setCountryCode(string $country_code) {
         if(!$this->setModified('country_code', $country_code)->isModified()) {
             return $this;
         }
@@ -146,7 +146,7 @@ class PhoneNumber extends CoreEntity
 	 *
 	 * @return $this
 	 */
-    public function setExtension(\string $extension) {
+    public function setExtension(string $extension) {
         if(!$this->setModified('extension', $extension)->isModified()) {
             return $this;
         }
@@ -173,7 +173,7 @@ class PhoneNumber extends CoreEntity
 	 *
 	 * @return $this
 	 */
-    public function setNumber(\string $number) {
+    public function setNumber(string $number) {
         if(!$this->setModified('number', $number)->isModified()) {
             return $this;
         }

@@ -103,7 +103,7 @@ class SocialAccount extends CoreEntity
      *
      * @return $this
      */
-    public function setNetwork(\string $network) {
+    public function setNetwork(string $network) {
         if(!$this->setModified('network', $network)->isModified()) {
             return $this;
         }
@@ -123,7 +123,7 @@ class SocialAccount extends CoreEntity
      *
      * @return $this
      */
-    public function setUsername(\string $username) {
+    public function setUsername(string $username) {
         if(!$this->setModified('username', $username)->isModified()) {
             return $this;
         }
